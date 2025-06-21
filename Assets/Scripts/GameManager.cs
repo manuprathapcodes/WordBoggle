@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class GameManager : MonoBehaviour
     public GridManager gridMgr;
     public DictionaryManager dictMgr;
     public TextMeshProUGUI scoreTMP, avgTMP, objectiveTMP, timerTMP;
+    public GameObject restartButton;
+    public InputController inputController;
+    private bool gameOver = false;
     int scoreTotal, wordCount;
     float avgScore => wordCount == 0 ? 0 : scoreTotal / (float)wordCount;
 
@@ -45,11 +49,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (!isEndless && timeLeft > 0)
+        if (!isEndless && !gameOver && timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
             timerTMP.text = $"Time: {timeLeft:0}";
-            if (timeLeft <= 0) EndLevel(false);
+
+            if (timeLeft <= 0)
+            {
+                timeLeft = 0;
+                EndLevel(false);
+            }
         }
     }
 
@@ -96,6 +105,28 @@ public class GameManager : MonoBehaviour
 
     void EndLevel(bool won)
     {
+        // Stop further updates
+        gameOver = true;
+        timeLeft = 0;
+        timerTMP.text = "Time: 0";
+
+        // Show result
         objectiveTMP.text = won ? "You Win!" : "Time's Up!";
+
+        // Disable input
+        if (inputController != null)
+            inputController.enabled = false;
+
+        // Show Restart button only if lost while disabling the grid
+        if (!won && restartButton != null)
+        {
+            gridMgr.gameObject.SetActive(false);
+            restartButton.SetActive(true);
+        }
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
