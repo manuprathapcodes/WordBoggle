@@ -3,6 +3,9 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// The class is responsible for managint the user input. 
+/// </summary>
 public class InputController : MonoBehaviour
 {
     public GraphicRaycaster raycaster;

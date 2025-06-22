@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This class is responsible for managing LEVEL mode games. Orchestrates the level count. 
+/// </summary>
 public class LevelLoader : MonoBehaviour
 {
     public static LevelLoader Instance;
