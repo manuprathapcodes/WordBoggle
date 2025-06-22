@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+/// <summary>
+/// Manager class for maintaining a dictionary.
+/// </summary>
 public class DictionaryManager : MonoBehaviour
 {
     public HashSet<string> words = new HashSet<string>();

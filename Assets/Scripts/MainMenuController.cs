@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// This class controls the Main Scene. Helps the transition from main scene to gamePlay scene. 
+/// </summary>
 public class MainMenuController : MonoBehaviour
 {
     public void PlayEndless()

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// The manager class which orchestrates the game. 
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -25,15 +28,16 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
+    // Initial point of execution for ENDLESS mode. 
     public void StartEndless()
     {
-        Debug.LogWarning("Starting Endless");
         isEndless = true;
         scoreTotal = wordCount = 0;
         gridMgr.GenerateGrid(true);
         UpdateUI();
     }
 
+    // Initial point of execution for LEVELS mode. 
     public void StartLevel(LevelData ld)
     {
         isEndless = false;
@@ -49,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        // Time LOGIC.
         if (timeLeft == 0)
             timerTMP.gameObject.SetActive(false);
 
@@ -65,6 +70,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Method to check if the tile path the user has chosen is a valid word or not. 
     public void OnWordComplete(List<Tile> path)
     {
         string w = "";
@@ -104,6 +110,7 @@ public class GameManager : MonoBehaviour
         CheckLevelCompletion();
     }
 
+    // Updates the TMP values on the screen as the game progresses. 
     void UpdateUI()
     {
         scoreTMP.text = $"Score: {scoreTotal}";
@@ -114,12 +121,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Method to check if the level is completed or not based on word count, time. 
     void CheckLevelCompletion()
     {
         if (!isEndless && wordCount >= levelData.wordCount &&
             (levelData.timeSec == 0 || timeLeft > 0)) EndLevel(true);
     }
 
+    // Method to see various options after a level ends. 
     void EndLevel(bool won)
     {
         gameOver = true;
@@ -147,11 +156,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Loads the next level. 
     void LoadNextLevel()
     {
         LevelLoader.Instance.ProceedToNextLevel();
     }
 
+    // Restarts the LEVEL game from start. 
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);

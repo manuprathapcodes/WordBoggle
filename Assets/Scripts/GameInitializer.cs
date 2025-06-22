@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// This class is responsible for initializing the game based on USER selection.
+/// </summary>
 public class GameInitializer : MonoBehaviour
 {
     public TextAsset levelDataJSON;

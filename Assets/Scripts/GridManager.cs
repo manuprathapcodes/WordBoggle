@@ -2,12 +2,16 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class is responsible to manage the GRID UI. 
+/// </summary>
 public class GridManager : MonoBehaviour
 {
     public GameObject tilePrefab;
     public int width = 4, height = 4;
     public Tile[,] grid;
 
+    // main method to generate the grid based on the mode. 
     public void GenerateGrid(bool endlessMode, LevelData level = null)
     {
         if (level != null)
@@ -54,12 +58,14 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    // Generate random letters for ENDLESS mode. 
     char RandomLetter()
     {
         string letters = "ETAOINSHRDLUCMWGFYPBVKJXQZ";
         return letters[Random.Range(0, letters.Length)];
     }
 
+    // Remove tiles in the ENDLESS mode when a word is found. 
     public void RemoveTiles(List<Tile> path)
     {
         foreach (var t in path)
@@ -75,6 +81,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    // Helper to check if two tiles are adjacent to each other. 
     public bool IsAdjacent(Tile a, Tile b) =>
         Mathf.Abs(a.coords.x - b.coords.x) <= 1 && Mathf.Abs(a.coords.y - b.coords.y) <= 1;
     }

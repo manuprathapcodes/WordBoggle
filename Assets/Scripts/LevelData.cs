@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using System.Text;
 
+/// <summary>
+/// This script contains all the data that is needed for serializing the level data. 
+/// </summary>
+
 [System.Serializable]
 public class TileInfo
 {

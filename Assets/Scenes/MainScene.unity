@@ -859,7 +859,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f879dbbbbffcd4b2a9bf04e643b52645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelDataJSON: {fileID: 4900000, guid: b7d84be541a024729b09361591391882, type: 3}
 --- !u!4 &1558974100
 Transform:
   m_ObjectHideFlags: 0
@@ -911,7 +910,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

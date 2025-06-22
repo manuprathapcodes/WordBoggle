@@ -3,6 +3,9 @@ using TMPro;
 
 public enum TileType { Normal, Bug, Rock }
 
+/// <summary>
+/// This is data representation of a TILE
+/// </summary>
 public class Tile : MonoBehaviour
 {
     public Vector2Int coords;
@@ -29,6 +32,7 @@ public class Tile : MonoBehaviour
         rockGO.SetActive(tileType == TileType.Rock);
     }
 
+    // Method to highlight/de highlight the tile based on user interation. 
     public void Highlight(bool on)
     {
         isSelected = on;
