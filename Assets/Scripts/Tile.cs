@@ -11,8 +11,8 @@ public class Tile : MonoBehaviour
 
     [Header("References")]
     public TextMeshProUGUI letterTMP;
-    public GameObject bonusGO;  // Assign ScoreIndicators > Bonus
-    public GameObject rockGO;   // Assign ScoreIndicators > Block
+    public GameObject bonusGO;
+    public GameObject rockGO; 
 
     public bool isSelected = false;
 
