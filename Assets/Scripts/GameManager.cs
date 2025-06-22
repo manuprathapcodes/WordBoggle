@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private bool gameOver = false;
     int scoreTotal, wordCount;
     float avgScore => wordCount == 0 ? 0 : scoreTotal / (float)wordCount;
+    private HashSet<string> usedWords = new HashSet<string>();
 
     bool isEndless;
     LevelData levelData;
@@ -35,7 +36,6 @@ public class GameManager : MonoBehaviour
 
     public void StartLevel(LevelData ld)
     {
-        Debug.LogWarning($"Starting Level: {ld.wordCount}");
         isEndless = false;
         levelData = ld;
         scoreTotal = ld.totalScore;
@@ -49,6 +49,9 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (timeLeft == 0)
+            timerTMP.gameObject.SetActive(false);
+
         if (!isEndless && !gameOver && timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
@@ -66,7 +69,21 @@ public class GameManager : MonoBehaviour
     {
         string w = "";
         foreach (var t in path) w += t.letter;
-        if (!dictMgr.IsValid(w)) return;
+        w = w.ToUpper(); 
+
+        if (!dictMgr.IsValid(w))
+        {
+            Debug.Log($"Invalid word: {w}");
+            return;
+        }
+
+        if (usedWords.Contains(w))
+        {
+            Debug.Log($"Word already used: {w}");
+            return;
+        }
+
+        usedWords.Add(w);
 
         int pts = w.Length * 10;
         scoreTotal += pts;
@@ -105,24 +122,34 @@ public class GameManager : MonoBehaviour
 
     void EndLevel(bool won)
     {
-        // Stop further updates
         gameOver = true;
         timeLeft = 0;
         timerTMP.text = "Time: 0";
 
-        // Show result
+        inputController.enabled = false;
+
         objectiveTMP.text = won ? "You Win!" : "Time's Up!";
 
-        // Disable input
-        if (inputController != null)
-            inputController.enabled = false;
-
-        // Show Restart button only if lost while disabling the grid
-        if (!won && restartButton != null)
+        if (!won)
         {
-            gridMgr.gameObject.SetActive(false);
-            restartButton.SetActive(true);
+            if (restartButton != null)
+            {
+                gridMgr.gameObject.SetActive(false);
+                restartButton.SetActive(true);
+            }
         }
+        else
+        {
+            if (LevelLoader.Instance.HasMoreLevels())
+                Invoke(nameof(LoadNextLevel), 2f);
+            else
+                LevelLoader.Instance.ShowGameCompletedScreen();
+        }
+    }
+
+    void LoadNextLevel()
+    {
+        LevelLoader.Instance.ProceedToNextLevel();
     }
 
     public void RestartLevel()

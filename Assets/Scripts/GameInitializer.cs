@@ -1,8 +1,9 @@
-﻿// GameInitializer.cs
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameInitializer : MonoBehaviour
 {
+    public TextAsset levelDataJSON;
+
     void Start()
     {
         string mode = PlayerPrefs.GetString("GameMode");
@@ -12,13 +13,9 @@ public class GameInitializer : MonoBehaviour
         }
         else if (mode == "Level")
         {
-            string json = PlayerPrefs.GetString("LevelData");
-            Debug.Log($"LevelData json : {json}");
+            LevelLoader.Instance.LoadLevelsFromJSON(levelDataJSON.text);
+            GameManager.Instance.StartLevel(LevelLoader.Instance.GetCurrentLevel());
 
-            LevelDataList list = JsonUtility.FromJson<LevelDataList>(json);
-            LevelData ld = list.data[0];
-
-            GameManager.Instance.StartLevel(ld);
         }
     }
 }

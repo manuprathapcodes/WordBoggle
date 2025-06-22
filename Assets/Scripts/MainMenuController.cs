@@ -3,8 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    public TextAsset levelDataJSON;
-
     public void PlayEndless()
     {
         PlayerPrefs.SetString("GameMode", "Endless");
@@ -14,7 +12,6 @@ public class MainMenuController : MonoBehaviour
     public void PlayLevel()
     {
         PlayerPrefs.SetString("GameMode", "Level");
-        PlayerPrefs.SetString("LevelData", levelDataJSON.text);
         SceneManager.LoadScene("GamePlay");
     }
 }

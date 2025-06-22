@@ -27,10 +27,9 @@ public class InputController : MonoBehaviour
                 if (t != null && !currentPath.Contains(t) &&
                     (currentPath.Count == 0 || GameManager.Instance.gridMgr.IsAdjacent(t, currentPath[^1])))
                 {
-                    Debug.LogWarning($"Adding this: {t}");
                     t.Highlight(true);
                     currentPath.Add(t);
-                    break;  // Only select one tile per frame
+                    break; 
                 }
             }
         }
